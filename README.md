@@ -35,6 +35,8 @@ A comprehensive development toolkit for multi-stack projects with TaskMaster AI 
 
 ## 🚀 Quick Start / 快速开始
 
+**任何新的多技术栈项目都可以通过以下方式使用这套工具，我会持续更新，添加常规开发功能，例如文档体系等等：**
+
 ### Option 1: Use as Git Submodule (Recommended) / 选项1：作为 Git 子模块使用（推荐）
 
 ```bash
@@ -74,6 +76,28 @@ chmod +x scripts/setup-smart-automation.sh
 # Clean up
 # 清理
 rm -rf temp-my-taskmaster
+```
+
+### Quick Reference for Legacy Rust Projects / Rust 项目快速参考
+
+```bash
+# 简化的快速设置（保持向后兼容）
+# Simplified quick setup (maintaining backward compatibility)
+
+# 添加工具包作为子模块
+git submodule add https://github.com/jhfnetboy/rust-taskmaster.git tools/rust-taskmaster
+
+# 复制工具到项目
+cp tools/rust-taskmaster/scripts/* scripts/
+cp tools/rust-taskmaster/templates/* templates/
+
+# 设置自动化环境
+chmod +x scripts/setup-rust-automation.sh
+./scripts/setup-rust-automation.sh
+
+# 初始化TaskMaster
+npm install -g task-master-ai
+task-master init
 ```
 
 ---
