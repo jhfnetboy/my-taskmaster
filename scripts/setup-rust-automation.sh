@@ -22,6 +22,17 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Check if this is a Rust project
+echo -e "${YELLOW}Checking if this is a Rust project...${NC}"
+
+if [[ ! -f "Cargo.toml" ]]; then
+    echo -e "${YELLOW}⚠️  No Cargo.toml found. This doesn't appear to be a Rust project.${NC}"
+    echo -e "${CYAN}💡 Use ./scripts/setup-smart-automation.sh for multi-stack projects${NC}"
+    exit 0
+fi
+
+echo -e "${GREEN}✅ Rust project detected${NC}"
+
 # Check prerequisites
 echo -e "${YELLOW}Checking prerequisites...${NC}"
 
