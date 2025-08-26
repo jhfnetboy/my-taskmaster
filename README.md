@@ -2,6 +2,25 @@
 
 A comprehensive toolkit for Rust projects using TaskMaster AI for project management and development automation.
 
+任何新的（Rust）项目都可以通过以下方式使用这套工具，我会持续更新，添加常规开发功能，例如文档体系等等：
+
+  # 添加工具包作为子模块
+  git submodule add https://github.com/jhfnetboy/rust-taskmaster.git
+  tools/rust-taskmaster
+
+  # 复制工具到项目
+  cp tools/rust-taskmaster/scripts/* scripts/
+  cp tools/rust-taskmaster/templates/* templates/
+
+  # 设置自动化环境
+  chmod +x scripts/setup-rust-automation.sh
+  ./scripts/setup-rust-automation.sh
+
+  # 初始化TaskMaster
+  npm install -g task-master-ai
+  task-master init
+
+
 ## Overview
 
 This repository provides reusable tools and configurations for setting up TaskMaster AI in Rust projects, along with automated cache management and development workflow optimization.
