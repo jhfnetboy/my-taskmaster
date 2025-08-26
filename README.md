@@ -16,9 +16,9 @@ A comprehensive development toolkit for multi-stack projects with TaskMaster AI 
 
 ### 🔧 **Stack-Specific Automation / 技术栈特定自动化**
 - **Rust**: `rskiller` cache management with 2-hour scheduled cleanup / **Rust**: 使用 `rskiller` 缓存管理，每2小时自动清理
-- **Node.js/Frontend**: Package optimization and dependency management / **Node.js/前端**: 包优化和依赖管理
+- **Node.js/Frontend**: `pnpm` package management with optimization / **Node.js/前端**: 使用 `pnpm` 包管理和优化
 - **Golang**: Code formatting and linting with `gofumpt` and `golangci-lint` / **Golang**: 使用 `gofumpt` 和 `golangci-lint` 进行代码格式化和代码检查
-- **Solidity**: Smart contract development with Hardhat integration / **Solidity**: 智能合约开发，集成 Hardhat
+- **Solidity**: Foundry/Forge development with Anvil local blockchain / **Solidity**: 使用 Foundry/Forge 开发，集成 Anvil 本地区块链
 - **Python**: Code quality with `black`, `flake8`, and `mypy` / **Python**: 使用 `black`、`flake8` 和 `mypy` 进行代码质量管理
 
 ### 📋 **TaskMaster AI Integration / TaskMaster AI 集成**
@@ -113,10 +113,10 @@ The toolkit automatically detects your project's technology stacks and installs 
 | Stack | Detection Method | Tools Installed | 技术栈 | 检测方法 | 安装的工具 |
 |-------|------------------|-----------------|--------|----------|------------|
 | **Rust** | `Cargo.toml` exists | `rskiller` (cache management) | **Rust** | 存在 `Cargo.toml` | `rskiller`（缓存管理） |
-| **Node.js Backend** | `package.json` (no frontend frameworks) | `npm-check-updates`, `nodemon` | **Node.js 后端** | `package.json`（无前端框架） | `npm-check-updates`、`nodemon` |
-| **Frontend** | `package.json` with React/Vue/Angular/etc. | `npm-check-updates`, `typescript` | **前端** | 包含 React/Vue/Angular 等的 `package.json` | `npm-check-updates`、`typescript` |
+| **Node.js Backend** | `package.json` (no frontend frameworks) | `pnpm`, `nodemon`, `npm-check-updates` | **Node.js 后端** | `package.json`（无前端框架） | `pnpm`、`nodemon`、`npm-check-updates` |
+| **Frontend** | `package.json` with React/Vue/Angular/etc. | `pnpm`, `typescript`, `npm-check-updates` | **前端** | 包含 React/Vue/Angular 等的 `package.json` | `pnpm`、`typescript`、`npm-check-updates` |
 | **Golang** | `go.mod` or `go.sum` exists | `gofumpt`, `golangci-lint` | **Golang** | 存在 `go.mod` 或 `go.sum` | `gofumpt`、`golangci-lint` |
-| **Solidity** | Hardhat config or contracts folder | `hardhat`, `solhint` | **Solidity** | Hardhat 配置或 contracts 文件夹 | `hardhat`、`solhint` |
+| **Solidity** | `foundry.toml` or Hardhat config | `foundry`, `forge`, `anvil`, `solhint` | **Solidity** | `foundry.toml` 或 Hardhat 配置 | `foundry`、`forge`、`anvil`、`solhint` |
 | **Python** | `requirements.txt`, `pyproject.toml`, `setup.py` | `black`, `flake8`, `mypy` | **Python** | `requirements.txt`、`pyproject.toml`、`setup.py` | `black`、`flake8`、`mypy` |
 
 ### Manual Detection / 手动检测
@@ -149,7 +149,8 @@ node.js >= 16.0.0    # For TaskMaster AI / 用于 TaskMaster AI
 rustc >= 1.70.0
 
 # For Node.js/Frontend projects / 对于 Node.js/前端项目  
-npm >= 8.0.0
+npm >= 8.0.0         # Will install pnpm automatically / 会自动安装 pnpm
+pnpm >= 7.0.0        # Preferred package manager / 首选包管理器
 
 # For Golang projects / 对于 Golang 项目
 go >= 1.19
@@ -476,8 +477,8 @@ MIT 许可证 - 详情请参阅 [LICENSE](LICENSE) 文件。
 
 ## 🙏 Acknowledgments / 致谢
 
-- **TaskMaster AI** for project management capabilities / 项目管理功能
-- **rskiller** for Rust cache management / Rust 缓存管理  
+- **[TaskMaster AI](https://github.com/eyaltoledano/claude-task-master)** for project management capabilities / 项目管理功能
+- **[rskiller](https://crates.io/crates/rskiller)** for Rust cache management / Rust 缓存管理  
 - **Claude Code** for development workflow integration / 开发流程集成
 - Community contributors and feedback / 社区贡献者和反馈
 

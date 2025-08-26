@@ -89,33 +89,37 @@ for stack in "${DETECTED_STACKS[@]}"; do
             ;;
             
         "nodejs")
-            # Install Node.js development tools
-            echo -e "${BLUE}Installing Node.js development tools...${NC}"
-            npm install -g npm-check-updates nodemon
+            # Install Node.js development tools with pnpm
+            echo -e "${BLUE}Installing Node.js development tools with pnpm...${NC}"
+            npm install -g pnpm
+            pnpm install -g nodemon npm-check-updates
             
-            # Setup package.json scripts optimization
+            # Setup package.json scripts optimization for pnpm
             if [[ -f "package.json" ]]; then
-                echo -e "${BLUE}Analyzing package.json for optimization...${NC}"
+                echo -e "${BLUE}Analyzing package.json for pnpm optimization...${NC}"
                 # Add common development scripts if missing
                 npx json -I -f package.json -e 'this.scripts=this.scripts||{}'
                 npx json -I -f package.json -e 'this.scripts.dev=this.scripts.dev||"nodemon src/index.js"'
-                npx json -I -f package.json -e 'this.scripts.clean=this.scripts.clean||"rm -rf node_modules package-lock.json && npm install"'
+                npx json -I -f package.json -e 'this.scripts.clean=this.scripts.clean||"rm -rf node_modules pnpm-lock.yaml && pnpm install"'
+                npx json -I -f package.json -e 'this.scripts.update=this.scripts.update||"pnpm update"'
             fi
-            echo -e "${GREEN}✅ Node.js environment configured${NC}"
+            echo -e "${GREEN}✅ Node.js environment configured with pnpm${NC}"
             ;;
             
         "frontend")
-            # Install frontend development tools
-            echo -e "${BLUE}Installing frontend development tools...${NC}"
-            npm install -g npm-check-updates typescript
+            # Install frontend development tools with pnpm
+            echo -e "${BLUE}Installing frontend development tools with pnpm...${NC}"
+            npm install -g pnpm
+            pnpm install -g typescript npm-check-updates
             
             if [[ -f "package.json" ]]; then
-                echo -e "${BLUE}Optimizing frontend build configuration...${NC}"
+                echo -e "${BLUE}Optimizing frontend build configuration for pnpm...${NC}"
                 # Suggest modern build optimizations
                 npx json -I -f package.json -e 'this.scripts=this.scripts||{}'
-                npx json -I -f package.json -e 'this.scripts.analyze=this.scripts.analyze||"npm run build -- --analyze"'
+                npx json -I -f package.json -e 'this.scripts.analyze=this.scripts.analyze||"pnpm run build -- --analyze"'
+                npx json -I -f package.json -e 'this.scripts.clean=this.scripts.clean||"rm -rf node_modules pnpm-lock.yaml dist && pnpm install"'
             fi
-            echo -e "${GREEN}✅ Frontend environment configured${NC}"
+            echo -e "${GREEN}✅ Frontend environment configured with pnpm${NC}"
             ;;
             
         "golang")
@@ -133,17 +137,52 @@ for stack in "${DETECTED_STACKS[@]}"; do
             ;;
             
         "solidity")
-            # Install Solidity development tools
-            echo -e "${BLUE}Installing Solidity development tools...${NC}"
-            npm install -g hardhat solhint
+            # Install Solidity development tools (Foundry + pnpm)
+            echo -e "${BLUE}Installing Solidity development tools (Foundry/Forge + Anvil)...${NC}"
             
-            if [[ -f "package.json" ]]; then
-                echo -e "${BLUE}Configuring Solidity project scripts...${NC}"
+            # Install Foundry
+            if ! command_exists forge; then
+                echo -e "${BLUE}Installing Foundry...${NC}"
+                curl -L https://foundry.paradigm.xyz | bash
+                source ~/.bashrc 2>/dev/null || source ~/.zshrc 2>/dev/null || true
+                foundryup
+            fi
+            
+            # Install pnpm and solhint
+            npm install -g pnpm
+            pnpm install -g solhint
+            
+            # Configure project scripts based on framework
+            if [[ -f "foundry.toml" ]]; then
+                echo -e "${BLUE}Foundry project detected, configuring scripts...${NC}"
+                # Create Makefile for common Foundry operations
+                cat > Makefile << 'EOF'
+# Foundry project Makefile
+.PHONY: build test clean deploy anvil
+
+build:
+	forge build
+
+test:
+	forge test -vvv
+
+clean:
+	forge clean
+
+anvil:
+	anvil
+
+deploy-local:
+	forge script script/Deploy.s.sol --rpc-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
+EOF
+            elif [[ -f "package.json" ]]; then
+                echo -e "${BLUE}Configuring Hardhat/npm project scripts...${NC}"
                 npx json -I -f package.json -e 'this.scripts=this.scripts||{}'
                 npx json -I -f package.json -e 'this.scripts.compile=this.scripts.compile||"hardhat compile"'
                 npx json -I -f package.json -e 'this.scripts.test=this.scripts.test||"hardhat test"'
+                npx json -I -f package.json -e 'this.scripts.node=this.scripts.node||"hardhat node"'
             fi
-            echo -e "${GREEN}✅ Solidity environment configured${NC}"
+            echo -e "${GREEN}✅ Solidity environment configured with Foundry + pnpm${NC}"
             ;;
             
         "python")
