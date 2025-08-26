@@ -1,49 +1,136 @@
-# rust-taskmaster
-I create a re-useable and portable taskmaster and basic rust dev tool for any new projects.
+# Rust TaskMaster Tools
 
-I've created a comprehensive system for copying this TaskMaster setup to
+A comprehensive toolkit for Rust projects using TaskMaster AI for project management and development automation.
 
-  我创建了一个完整的 Rust 专用 TaskMaster 开发包(也可以用于其他类型项目)，包含以下功能：
+## Overview
 
-  🎉 已创建的包内容
+This repository provides reusable tools and configurations for setting up TaskMaster AI in Rust projects, along with automated cache management and development workflow optimization.
 
-  📦 打包文件
+## Features
 
-  - 目录: rust-taskmaster-package/
-  - 压缩包: rust-taskmaster-package-20250826_111606.tar.gz
+### 🔧 Development Tools
+- **Automated Rust Cache Management**: `rskiller` integration with scheduled cleanup every 2 hours
+- **Development Environment Setup**: Automated tool configuration and dependencies
+- **Template System**: Ready-to-use Rust project templates with TaskMaster integration
 
-  🦀 Rust 特定优化
+### 📋 TaskMaster Integration
+- **Project Setup**: One-command initialization for TaskMaster in Rust projects
+- **Documentation Templates**: Comprehensive guides for setup and usage
+- **Configuration Management**: Pre-configured settings for optimal Rust development
 
-  - rskiller 缓存管理: 每 2 小时自动清理
-  - 非交互式清理: 无需手动确认的安全清理模式
-  - 优化的 Cargo 配置: 快速开发构建 + 生产优化
-  - 自动化调度: macOS (launchd) 和 Linux (cron) 支持
+### 🚀 Automation Scripts
+- **Cache Management**: `scripts/rust-clean.sh` - Intelligent Rust cache cleaning
+- **Environment Setup**: `scripts/setup-rust-automation.sh` - Complete development environment
+- **Template Packaging**: `scripts/package-rust-template.sh` - Package tools for reuse
 
-  🤖 TaskMaster 集成
+## Quick Start
 
-  - 完整的 Claude Code 和 Cursor MCP 配置
-  - Rust 专用自定义命令
-  - 项目管理和任务生成
-  - 复杂度分析和任务扩展
+### Option 1: Use as Git Submodule (Recommended)
+```bash
+# 1. Add this repo as a submodule to your Rust project
+git submodule add https://github.com/jhfnetboy/rust-taskmaster.git tools/rust-taskmaster
 
-  📝 使用方法
+# 2. Initialize the submodule
+git submodule update --init --recursive
 
-  快速部署:
-  # 解压到新项目
-  tar -xzf rust-taskmaster-package-20250826_111606.tar.gz
-  cp -r rust-taskmaster-package/* your-new-rust-project/
-  cd your-new-rust-project/
+# 3. Copy tools to your project (optional, tools can be used directly from submodule)
+cp tools/rust-taskmaster/scripts/* scripts/
+cp tools/rust-taskmaster/templates/* templates/
+```
 
-  # 运行一键设置
-  ./setup-new-rust-project.sh "项目名称" "项目描述"
+### Option 2: Direct Copy
+```bash
+# 1. Clone the repository
+git clone https://github.com/jhfnetboy/rust-taskmaster.git temp-rust-tools
 
-  ✨ 自动化功能
+# 2. Copy tools to your project
+mkdir -p scripts templates docs
+cp temp-rust-tools/scripts/* scripts/
+cp temp-rust-tools/templates/* templates/
+cp temp-rust-tools/docs/* docs/
 
-  - ✅ 每 2 小时自动缓存清理
-  - ✅ 优化的构建配置
-  - ✅ Claude Code 自定义命令
-  - ✅ 开发工作流脚本
-  - ✅ 完整文档和模板
+# 3. Clean up
+rm -rf temp-rust-tools
+```
 
-  现在你有了一个可重复使用的 Rust
-  开发环境包，可以轻松部署到任何新项目中！🚀
+## Setup Instructions
+
+### Step 1: Install Rust Cache Management (Optional but Recommended)
+```bash
+# This sets up rskiller and automated cache cleaning every 2 hours
+chmod +x scripts/setup-rust-automation.sh
+./scripts/setup-rust-automation.sh
+```
+
+### Step 2: Initialize TaskMaster AI
+```bash
+# Install TaskMaster AI globally
+npm install -g task-master-ai
+
+# Initialize in your Rust project
+task-master init
+
+# Or initialize with research capabilities
+task-master init --research
+```
+
+### Step 3: Create Your First Tasks
+```bash
+# Method 1: From PRD document
+echo "Build a Rust CLI tool with argument parsing" > docs/prd.txt
+task-master parse-prd docs/prd.txt
+
+# Method 2: Add tasks manually
+task-master add-task --prompt="Setup Cargo project structure"
+task-master add-task --prompt="Implement main CLI functionality"
+task-master add-task --prompt="Add tests and documentation"
+```
+
+## Daily Usage
+
+### Working with Tasks
+```bash
+# See all tasks
+task-master list
+
+# Get next task to work on
+task-master next
+
+# Start working on a task
+task-master set-status --id=1.1 --status=in-progress
+
+# Complete a task
+task-master set-status --id=1.1 --status=done
+
+# Get task details
+task-master show 1.2
+```
+
+### Cache Management
+```bash
+# Manual cache cleanup (if you installed the automation)
+./scripts/rust-clean.sh
+
+# Check if automation is running
+# macOS:
+launchctl list | grep rust-clean
+# Linux:
+crontab -l | grep rust-clean
+```
+
+## Directory Structure
+
+```
+rust-taskmaster/
+├── scripts/
+│   ├── rust-clean.sh              # Cache management with rskiller
+│   ├── setup-rust-automation.sh   # Complete environment setup
+│   └── package-rust-template.sh   # Template packaging tool
+├── templates/
+│   └── rust-project-template.md   # Rust project template for TaskMaster
+├── docs/
+│   ├── Rust-Cache-Management.md   # Cache management documentation
+│   ├── TaskMaster-Setup-Guide.md  # Complete setup guide
+│   └── Quick-Setup-Commands.md    # Quick reference commands
+└── README.md                      # This file
+```
