@@ -1,4 +1,6 @@
 # My-TaskMaster: Multi-Stack Development Automation Toolkit
+V 0.2 now.
+
 # My-TaskMaster: 多技术栈开发自动化工具包
 
 A comprehensive development toolkit for multi-stack projects with TaskMaster AI integration, featuring automatic tech stack detection and smart tooling for Rust, Node.js, Frontend (TypeScript), Golang, Solidity, and Python projects.
